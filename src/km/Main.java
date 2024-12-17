@@ -16,12 +16,12 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         try {
-            // Pytanie o ścieżkę do pliku konfiguracyjnego
-            System.out.println("Podaj ścieżkę do pliku konfiguracyjnego: ");
-            String configFilePath = scanner.nextLine();
+//            // Pytanie o ścieżkę do pliku konfiguracyjnego
+//            System.out.println("Podaj ścieżkę do pliku konfiguracyjnego: ");
+//            String configFilePath = scanner.nextLine();
 
             // Wczytanie pliku konfiguracyjnego
-            ConfigLoader configLoader = new ConfigLoader(configFilePath);
+            ConfigLoader configLoader = new ConfigLoader("pea3_config.txt");
 
             // Pobieranie konfiguracji
             String inputFilePath = configLoader.getProperty("inputData");

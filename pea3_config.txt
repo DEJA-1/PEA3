@@ -1,0 +1,5 @@
+inputData=rbg443.atsp
+stopTime=50
+initialTemperature=10000.0
+coolingRate=0.99
+outputFile=results.csv
