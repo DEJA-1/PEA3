@@ -1,5 +1,7 @@
-inputData=rbg443.atsp
-stopTime=50
+inputData=ftv47.atsp
+stopTime=60
 initialTemperature=10000.0
-coolingRate=0.99
+coolingRate=0.9999
 outputFile=results.csv
+testMode=0
+initialSolutionMethod=nearestNeighbor
