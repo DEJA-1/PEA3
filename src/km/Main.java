@@ -28,6 +28,7 @@ public class Main {
             String outputFilePath = configLoader.getProperty("outputFile");
             int testMode = configLoader.getIntProperty("testMode"); // Wartość trybu testowego (0 lub 1)
             String initialSolutionMethod = configLoader.getProperty("initialSolutionMethod"); // Metoda generowania rozwiązania początkowego
+            String coolingMethod = configLoader.getProperty("coolingMethod"); // Domyślnie geometric
 
             // Inicjalizacja CSVWriter
             csvWriter = new CSVWriter();
@@ -40,7 +41,7 @@ public class Main {
                 TSPProblem problem = TSPProblem.loadFromFile(inputFilePath);
 
                 long startTimeNano = System.nanoTime();
-                SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(problem, initialTemperature, coolingRate, stopTime, initialSolutionMethod); // Zakładamy czas wykonania w sekundach
+                SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(problem, initialTemperature, coolingRate, stopTime, initialSolutionMethod, coolingMethod); // Zakładamy czas wykonania w sekundach
                 List<Integer> solution = simulatedAnnealing.solve(1000000);
                 long elapsedTimeNano = System.nanoTime() - startTimeNano;
                 long elapsedTimeMs = elapsedTimeNano / 1_000_000;
@@ -50,7 +51,7 @@ public class Main {
                         bestDistance, elapsedTimeNano, elapsedTimeMs);
             } else {
                 // Standardowy tryb - przetwarzanie plików i wielokrotne uruchomienia
-                int[] executionTimes = {10, 1, 1}; // Czas wykonania w sekundach: 2 min, 4 min, 6 min
+                int[] executionTimes = {60, 120, 180}; // Czas wykonania w sekundach: 1 min, 2 min, 3 min
                 int[] optimalSolutions = {1776, 2755, 2465};    // Znane optymalne wartości
                 String[] files = {"ftv47.atsp", "ftv170.atsp", "rbg403.atsp"};
 
@@ -72,7 +73,7 @@ public class Main {
                     // Uruchomienie algorytmu 10 razy
                     for (int run = 1; run <= 10; run++) {
                         long startTimeNano = System.nanoTime();
-                        SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(problem, initialTemperature, coolingRate, executionTime, initialSolutionMethod);
+                        SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing(problem, initialTemperature, coolingRate, executionTime, initialSolutionMethod, coolingMethod);
 
                         // Użycie solve() do znalezienia najlepszego rozwiązania
                         List<Integer> solution = simulatedAnnealing.solve(optimalSolution);

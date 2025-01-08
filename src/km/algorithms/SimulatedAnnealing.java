@@ -13,15 +13,18 @@ public class SimulatedAnnealing extends Algorithm {
     private final double coolingRate;
     private final long stopTime;
     private final String initialSolutionMethod;
+    private final String coolingMethod; // Nowe pole dla metody chłodzenia
 
-    public SimulatedAnnealing(TSPProblem problem, double initialTemperature, double coolingRate, long stopTime, String initialSolutionMethod) {
+    public SimulatedAnnealing(TSPProblem problem, double initialTemperature, double coolingRate, long stopTime, String initialSolutionMethod, String coolingMethod) {
         this.problem = problem;
         this.initialTemperature = initialTemperature;
         this.coolingRate = coolingRate;
         this.stopTime = stopTime;
         this.initialSolutionMethod = initialSolutionMethod;
+        this.coolingMethod = coolingMethod;
     }
 
+    @Override
     public List<Integer> solve(int optimalSolution) {
         int citiesCount = problem.getCitiesCount();
         Random random = new Random();
@@ -34,6 +37,7 @@ public class SimulatedAnnealing extends Algorithm {
 
         double temperature = initialTemperature;
         long startTime = System.currentTimeMillis();
+        int iteration = 1;
 
         while ((System.currentTimeMillis() - startTime) < stopTime * 1000) {
             List<Integer> newSolution = generateNeighbor(currentSolution);
@@ -49,15 +53,28 @@ public class SimulatedAnnealing extends Algorithm {
                 bestDistance = currentDistance;
             }
 
+            // Chłodzenie: wybór metody na podstawie konfiguracji
+            if ("logarithmic".equalsIgnoreCase(coolingMethod)) {
+                temperature = logCooling(iteration); // Logarytmiczne chłodzenie
+            } else { // Domyślnie geometric
+                temperature *= coolingRate;
+            }
+
+            // Jeśli znaleziono optymalne rozwiązanie, zakończ wcześniej
             if (currentDistance == optimalSolution) {
                 System.out.printf("Optimal solution found: %d. Terminating early.%n", currentDistance);
                 break;
             }
 
-            temperature *= coolingRate;
+            iteration++;
         }
 
         return bestSolution;
+    }
+
+    // Logarytmiczne chłodzenie
+    private double logCooling(int iteration) {
+        return initialTemperature / (1 + coolingRate * Math.log(1 + iteration));
     }
 
 

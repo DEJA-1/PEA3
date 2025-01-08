@@ -1,7 +1,9 @@
 inputData=ftv47.atsp
-stopTime=60
+stopTime=120
 initialTemperature=10000.0
-coolingRate=0.9999
-outputFile=results.csv
+coolingRate=0.99
+outputFile=results_random_logarithmic_10k_099.csv
 testMode=0
-initialSolutionMethod=nearestNeighbor
+initialSolutionMethod=random
+coolingMethod=logarithmic
+
