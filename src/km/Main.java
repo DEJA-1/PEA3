@@ -4,7 +4,6 @@ import km.algorithms.SimulatedAnnealing;
 import km.data.ConfigLoader;
 import km.data.CSVWriter;
 import km.model.TSPProblem;
-import km.ui.Display;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -13,7 +13,7 @@ public class SimulatedAnnealing extends Algorithm {
     private final double coolingRate;
     private final long stopTime;
     private final String initialSolutionMethod;
-    private final String coolingMethod; // Nowe pole dla metody chłodzenia
+    private final String coolingMethod;
 
     public SimulatedAnnealing(TSPProblem problem, double initialTemperature, double coolingRate, long stopTime, String initialSolutionMethod, String coolingMethod) {
         this.problem = problem;
@@ -56,7 +56,7 @@ public class SimulatedAnnealing extends Algorithm {
             // Chłodzenie: wybór metody na podstawie konfiguracji
             if ("logarithmic".equalsIgnoreCase(coolingMethod)) {
                 temperature = logCooling(iteration); // Logarytmiczne chłodzenie
-            } else { // Domyślnie geometric
+            } else {
                 temperature *= coolingRate;
             }
 
